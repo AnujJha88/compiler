@@ -66,6 +66,19 @@ int scan(struct Token *t){
 }
 
 
-static scanint(int c){
-    
+static int scanint(int c){
+    int k,val=0;
+
+    while((k=chrpos("0123456789",c))>=0){
+        val=val*10+k;
+        c=next();
+    }
+
+    putback(c);
+    return val;
+
 }
+
+
+
+
