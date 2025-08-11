@@ -28,5 +28,10 @@ struct ASTNode{
     int intvalue;//for INTLIT
 
 };
+// so if node has valid op then we have the values in left and right
+// subtrees that we need to handle
+// if op is INTLIT then we just have the intvalue field
+
+
 
 

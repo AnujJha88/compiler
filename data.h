@@ -1,4 +1,8 @@
-extern int LineNumber;
-extern int Putback;
+#ifndef extern_
+ #define extern_ extern
+#endif
 
-extern FILE *Infile;
+
+extern_ int     Line;
+extern_ int	Putback;
+extern_ FILE	*Infile;

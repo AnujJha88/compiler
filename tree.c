@@ -1,4 +1,5 @@
 #include "defs.h"
+#include "data.h"
 
 struct ASTNode *makeASTNode(int op, ASTNode* left, ASTNode*  right, int intvalue){
 struct ASTNode *node=(struct ASTNode*)malloc(sizeof(struct ASTNode)); // making new node in heap
