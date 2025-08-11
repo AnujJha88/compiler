@@ -10,6 +10,7 @@ struct Token{
 
 //enum of values token can take
 enum{
+    T_EOF,
 T_MINUS,
 T_PLUS,
 T_MULTIPLY,

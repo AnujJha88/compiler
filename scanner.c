@@ -1,9 +1,8 @@
-#include "data.h"
 #include "defs.h"
+#include "data.h"
+#include "decl.h"
 
-int LineNumber = 1;
-int Putback = 0;
-// FILE *Infile = NULL; // need to figure this out
+
 static int next(void){
   int c;
   if(Putback){
@@ -15,7 +14,7 @@ static int next(void){
     c=fgetc(Infile);
 
     if('\n'==c){
-        LineNumber++;
+        Line++;
     }
     return c;
 }
@@ -35,11 +34,35 @@ static int skip(void){
 }
 
 
+static int chrpos(char *s,int c){
+    char*p;
+    p=strchr(s,c);
+    return(p?p-s:-1);
+}
+
+
+
+static int scanint(int c){
+    int k,val=0;
+
+    while((k=chrpos("0123456789",c))>=0){
+        val=val*10+k;
+        c=next();
+    }
+
+    putback(c);
+    return val;
+
+}
+
+
+
 int scan(struct Token *t){
     int c;
     c=skip();
     switch(c){
         case  EOF:
+            t->token = T_EOF;
             return 0;
         case '+':
             t->token = T_PLUS;
@@ -60,29 +83,8 @@ int scan(struct Token *t){
             t->token=T_INTLIT;
             break;
         }
-        printf("Unrecognised character %c on line %d \n",c,LineNumber);
+        printf("Unrecognised character %c on line %d \n",c,Line);
+        exit(1);
     }
     return(1);
 }
-
-
-static int scanint(int c){
-    int k,val=0;
-
-    while((k=chrpos("0123456789",c))>=0){
-        val=val*10+k;
-        c=next();
-    }
-
-    putback(c);
-    return val;
-
-}
-
-
-static int chrpos(char *s,int c){
-    char*p;
-    p=strchr(s,c);
-    return(p?p-s:-1);
-}
-
