@@ -8,6 +8,7 @@
 #include <errno.h>
 #include "decl.h"
 
+
 static void init() {
   Line = 1;
   Putback = '\n';
@@ -16,25 +17,33 @@ static void init() {
 static void usage(char *prog){
     fprintf(stderr,"usafe: %s infile \n",prog);
 }
-char *tokstr[] = { "-", "+", "*", "/", "intlit" };
+// char *tokstr[] = { "-", "+", "*", "/", "intlit" };
 
-static void scanfile(){
-    struct Token t;
-    while(scan(&t)){
-        printf("Token %s",tokstr[t.token]);
-        if(t.token==T_INTLIT)printf(", value %d", t.intvalue);
-        printf("\n");
-    }
-}
+// static void scanfile(){
+
+//     struct Token t;
+//     while(scan(&t)){
+//         printf("Token %s",tokstr[t.token]);
+//         if(t.token==T_INTLIT)printf(", value %d", t.intvalue);
+//         printf("\n");
+//     }
+// }
 
 void main(int argc,char* argv[]){
+    struct ASTNode* n;
+
     if (argc != 2)
         usage(argv[0]);
+
     init();
-   if ((Infile = fopen(argv[1], "r")) == NULL) {// if file aint there or sonmthing it'll exit
+
+   if ((Infile = fopen(argv[1], "r")) == NULL) {
+    // if file aint there or sonmthing it'll exit
     fprintf(stderr, "Unable to open %s: %s\n", argv[1], strerror(errno));
     exit(1);
    }
-    scanfile();
+    scan(&Token);
+    n=binary_exp();
+    printf("%d \n",interpretAST(n));
     exit(0);
 }

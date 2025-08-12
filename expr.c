@@ -41,17 +41,17 @@ int convert_token_to_AST_op(int token){
 // now we make the function that creates the actual tree
 //right now we have mo heirarchy between the operators
 struct ASTNode* binary_exp(){
-struct ASTNode* left,*right,*node;
-    int nodetype;
+    struct ASTNode *left,*right,*node;
+        int nodetype;
 
-    left=primary();
-    if(Token.token ==T_EOF)return left;
-    nodetype=convert_token_to_AST_op(Tokn.token);// convert the token to an AST
-    // Node and then make it like the root of this subtree and then attach to
-    // the main root if any and yada yada
-    scan(&Token);
-    right=binary_exp();//so we leave the right node to be made
-    //recirsively and we make each left subtree from every node 1 deep only
-    node=makeASTNode(nodetype,left,right,0);
-    return node;
+        left=primary();
+        if(Token.token ==T_EOF)return left;
+        nodetype=convert_token_to_AST_op(Token.token);// convert the token to an AST
+        // Node and then make it like the root of this subtree and then attach to
+        // the main root if any and yada yada
+        scan(&Token);
+        right=binary_exp();//so we leave the right node to be made
+        //recursively and we make each left subtree from every node 1 deep only
+        node=makeASTNode(nodetype,left,right,0);//this is not really having intvalues its having the operator so we do this
+        return node;
 }
