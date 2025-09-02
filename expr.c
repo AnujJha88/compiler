@@ -49,7 +49,7 @@ static int arithop(int tokentype){
         case T_DIVIDE:
         return A_DIV;
         default:
-            fprinf(stderr,"syntax error on line %d, token %d \n",Line,tokentype);
+            fprintf(stderr,"syntax error on line %d, token %d \n",Line,tokentype);
         exit(1);
     }
 }
@@ -93,10 +93,10 @@ struct ASTNode* additive_expr(){
     if(tokentype==T_EOF)
         return left;
 
-    while(true){
+    while((tokentype==T_PLUS)||(tokentype==T_MINUS)){
+        // fetch next integer
 scan(&Token);
-
-        right=multiplicative_expr();
+right=primary();
         left=makeASTNode(arithop(tokentype), left, right, 0);
 
 tokentype=Token.token;
